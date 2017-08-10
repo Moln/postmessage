@@ -1,14 +1,26 @@
 {
   "name": "@moln/postmessage",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Simple window.postMessage, Support IE 6/7/8 (iframe)",
   "main": "postmessage.js",
   "scripts": {
     "build": "uglifyjs ./postmessage.js -c -m -o ./postmessage.min.js --support-ie8"
   },
-  "author": "",
+  "author": "Moln",
   "license": "ISC",
   "devDependencies": {
     "uglifyjs": "^2.4.11"
+  },
+  "keywords": [
+    "postmessage",
+    "opener",
+    "pm"
+  ],
+  "bugs": {
+    "url": "https://github.com/Moln/postmessage/issues"
+  },
+  "repository": {
+    "type":"git",
+    "url":"https://github.com/Moln/postmessage.git"
   }
 }
