@@ -1,0 +1,14 @@
+{
+  "name": "@moln/postmessage",
+  "version": "0.0.1",
+  "description": "",
+  "main": "postmessage.js",
+  "scripts": {
+    "build": "uglifyjs ./postmessage.js -c -m -o ./postmessage.min.js --support-ie8"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "uglifyjs": "^2.4.11"
+  }
+}

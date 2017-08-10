@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="postmessage.js"></script>
+
+</head>
+<body>
+
+<iframe id="wina" src="http://127.0.0.1/postmessage/a.html" width="300" height="300"></iframe>
+
+<script>
+    window.onload = function () {
+        pm.bind('testb', function (params) {
+            console.log('page b called', params);
+        });
+        pm.one('testb-once', function (params) {
+            console.log('page b call once', params);
+        });
+
+        var wina = document.getElementById('wina');
+        pm.send('testa', wina.contentWindow, {a:1, b:2});
+        wina;
+    }
+
+</script>
+</body>
+</html>

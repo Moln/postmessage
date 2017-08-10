@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="postmessage.js"></script>
+    <script>
+        pm.bind('testa', function (params) {
+            console.log('page a called', params);
+
+            setTimeout(function () {
+                pm.send('testb', window.parent, {bbb: 123});
+            }, 1000);
+
+            setInterval(function () {
+                pm.send('testb-once', window.parent, {bbb: 3333});
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
