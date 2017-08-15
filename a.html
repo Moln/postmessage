@@ -9,6 +9,7 @@
             console.log('page a called', params);
 
             setTimeout(function () {
+                params.callback('callback');
                 pm.send('testb', window.parent, {bbb: 123});
             }, 1000);
 

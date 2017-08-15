@@ -19,6 +19,9 @@
                 return eval("(" + sJSON + ")");
             },
             stringify: function (str) {
+                var strLine = function (str) {
+                    return str.replace(/"/g, "\\$&").replace(/\n/g, "\\n");
+                }
                 if (str instanceof Object) {
                     var sOutput = "";
                     if (str.constructor === Array) {
@@ -27,15 +30,19 @@
                         return "[" + sOutput.substr(0, sOutput.length - 1) + "]";
                     }
                     if (str.toString !== Object.prototype.toString) {
-                        return "\"" + str.toString().replace(/"/g, "\\$&") + "\"";
+                        return "\"" + strLine(str.toString()) + "\"";
                     }
                     for (var sProp in str) {
-                        sOutput += "\"" + sProp.replace(/"/g, "\\$&") + "\":" + this.stringify(str[sProp]) + ",";
+                        sOutput += "\"" + strLine(sProp) + "\":" + this.stringify(str[sProp]) + ",";
                     }
                     return "{" + sOutput.substr(0, sOutput.length - 1) + "}";
                 }
+                // console.log(typeof str);
+                if (typeof str === "unknown") {
+                    return "\"[unknown]\"";
+                }
                 if (typeof str === "string") {
-                    return "\"" + str.replace(/"/g, "\\$&") + "\"";
+                    return "\"" + strLine(str) + "\"";
                 } else {
                     try {
                         //Fix [object]
@@ -43,7 +50,11 @@
 
                         return String(str);
                     } catch (e) {
-                        return "\"" + String(str) + "\"";
+                        if (!str.toString) {
+                            return "\"["+typeof(str)+"]\"";
+                        } else {
+                            return "\""+String(str)+"\"";
+                        }
                     }
                 }
             }
@@ -65,11 +76,7 @@
         postMessage: function () {
             var self = this,
                 dispatch = function (e) {
-                    try {
-                        var data = window.JSON.parse(e.data);
-                    } catch (err) {
-                        return;
-                    }
+                    var data = window.JSON.parse(e.data);
 
                     if (data.type) {
                         pm.trigger({
