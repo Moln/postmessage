@@ -1,15 +1,15 @@
-(function (root, factory) {
+(function (root, window, factory) {
     var name = 'pm';
 
     if (typeof exports === 'object' && typeof module === 'object')
-        module.exports = factory(root);
+        module.exports = factory(window);
     else if (typeof define === 'function' && define.amd)
         define([], factory);
     else if (typeof exports === 'object')
-        exports[name] = factory(root);
+        exports[name] = factory(window);
     else
-        root[name] = factory(root);
-})(this, function (window) {
+        root[name] = factory(window);
+})(this, window, function (window) {
     'use strict';
 
     //@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
