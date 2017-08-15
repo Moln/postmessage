@@ -34,7 +34,18 @@
                     }
                     return "{" + sOutput.substr(0, sOutput.length - 1) + "}";
                 }
-                return typeof str === "string" ? "\"" + str.replace(/"/g, "\\$&") + "\"" : String(str);
+                if (typeof str === "string") {
+                    return "\"" + str.replace(/"/g, "\\$&") + "\"";
+                } else {
+                    try {
+                        //Fix [object]
+                        this.parse(String(str));
+
+                        return String(str);
+                    } catch (e) {
+                        return "\"" + String(str) + "\"";
+                    }
+                }
             }
         };
     }
