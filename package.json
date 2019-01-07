@@ -1,6 +1,6 @@
 {
   "name": "@moln/postmessage",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Simple window.postMessage, Support IE 6/7/8 (iframe)",
   "main": "postmessage.js",
   "scripts": {
