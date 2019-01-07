@@ -9,7 +9,7 @@
   "author": "Moln",
   "license": "ISC",
   "devDependencies": {
-    "uglifyjs": "^2.4.11"
+    "uglify-js": "^2.4.11"
   },
   "keywords": [
     "postmessage",

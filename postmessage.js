@@ -12,59 +12,10 @@
 })(this, window, function (window) {
     'use strict';
 
-    //@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-    if (!window.JSON) {
-        window.JSON = {
-            parse: function (sJSON) {
-                return eval("(" + sJSON + ")");
-            },
-            stringify: function (str) {
-                var strLine = function (str) {
-                    return str.replace(/"/g, "\\$&").replace(/\n/g, "\\n");
-                }
-                if (str instanceof Object) {
-                    var sOutput = "";
-                    if (str.constructor === Array) {
-                        for (var nId = 0; nId < str.length; sOutput += this.stringify(str[nId]) + ",", nId++) {
-                        }
-                        return "[" + sOutput.substr(0, sOutput.length - 1) + "]";
-                    }
-                    if (str.toString !== Object.prototype.toString) {
-                        return "\"" + strLine(str.toString()) + "\"";
-                    }
-                    for (var sProp in str) {
-                        sOutput += "\"" + strLine(sProp) + "\":" + this.stringify(str[sProp]) + ",";
-                    }
-                    return "{" + sOutput.substr(0, sOutput.length - 1) + "}";
-                }
-                // console.log(typeof str);
-                if (typeof str === "unknown") {
-                    return "\"[unknown]\"";
-                }
-                if (typeof str === "string") {
-                    return "\"" + strLine(str) + "\"";
-                } else {
-                    try {
-                        //Fix [object]
-                        this.parse(String(str));
-
-                        return String(str);
-                    } catch (e) {
-                        if (!str.toString) {
-                            return "\"["+typeof(str)+"]\"";
-                        } else {
-                            return "\""+String(str)+"\"";
-                        }
-                    }
-                }
-            }
-        };
-    }
-
     var extend = function () {
-        var a = arguments[0];
-        for (var i = 1, len = arguments.length; i < len; i++) {
-            var b = arguments[i];
+        var args = arguments, a = args[0];
+        for (var i = 1, len = args.length; i < len; i++) {
+            var b = args[i];
             for (var prop in b) {
                 a[prop] = b[prop];
             }
@@ -87,7 +38,7 @@
                     }
                 };
 
-            this.send = function (target, data, origin) {
+            self.send = function (target, data, origin) {
                 data = window.JSON.stringify(data);
                 target.postMessage(data, origin);
             };
@@ -124,7 +75,7 @@
                 });
             };
 
-            var c = setInterval(function () {
+            setInterval(function () {
                 if (window.opener && window.opener.postMessage) {
                     var pmData = window.opener.postMessage;
                     for (var i = 0; i < pmData.length;) {
@@ -135,7 +86,7 @@
                 }
             }, 100);
 
-            this.send = function (target, data, origin) {
+            self.send = function (target, data, origin) {
                 postMessage.push({
                     source: {
                         window: window,
@@ -163,12 +114,12 @@
     var pm = {
         handler: handler,
         defaults: {
-            target: null, /* target window (required) */
-            type: null, /* message type (required) */
-            data: null, /* message data (required) */
+            target: null,   /* target window (required) */
+            type: null,     /* message type (required) */
+            data: null,     /* message data (required) */
             callback: null, /* call callback (optional) */
             complete: null, /* complete callback (optional) */
-            origin: "*"    /* postmessage origin (optional) */
+            origin: "*"     /* postmessage origin (optional) */
         },
         send: function (argType, argTarget, argData, argOptions) {
 
