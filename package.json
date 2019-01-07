@@ -7,7 +7,7 @@
     "build": "uglifyjs ./postmessage.js -c -m -o ./postmessage.min.js --support-ie8"
   },
   "author": "Moln",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "uglify-js": "^2.4.11"
   },
