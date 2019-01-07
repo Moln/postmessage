@@ -27,7 +27,12 @@
         postMessage: function () {
             var self = this,
                 dispatch = function (e) {
-                    var data = window.JSON.parse(e.data);
+                    var data;
+                    try {
+                        data = window.JSON.parse(e.data);
+                    } catch (e) {
+                        data = e.data;
+                    }
 
                     if (data.type) {
                         pm.trigger({
