@@ -30,7 +30,7 @@
                     var data;
                     try {
                         data = window.JSON.parse(e.data);
-                    } catch (e) {
+                    } catch (ex) {
                         data = e.data;
                     }
 
